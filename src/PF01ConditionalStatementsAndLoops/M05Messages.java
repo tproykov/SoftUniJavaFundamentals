@@ -1,4 +1,4 @@
 package PF01ConditionalStatementsAndLoops;
 
-public class Messages {
+public class M05Messages {
 }
