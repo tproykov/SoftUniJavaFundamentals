@@ -16,3 +16,8 @@ public class L01StudentInformation {
                 student_grade);
     }
 }
+
+// Write a program that:
+//•	Reads 3 lines of input – student name, age and average grade
+//•	Print all the info about the student in the following format:
+//"Name: {student name}, Age: {student age}, Grade: {student grade}".
