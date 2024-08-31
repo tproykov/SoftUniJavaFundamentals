@@ -8,12 +8,12 @@ public class L01StudentInformation {
 
         Scanner scanner = new Scanner(System.in);
 
-        String student_name = scanner.nextLine();
-        int student_age = Integer.parseInt(scanner.nextLine());
-        double student_grade = Double.parseDouble(scanner.nextLine());
+        String studentName = scanner.nextLine();
+        int studentAge = Integer.parseInt(scanner.nextLine());
+        double studentGrade = Double.parseDouble(scanner.nextLine());
 
-        System.out.printf("Name: %s, Age: %d, Grade: %.2f", student_name, student_age,
-                student_grade);
+        System.out.printf("Name: %s, Age: %d, Grade: %.2f", studentName, studentAge,
+                studentGrade);
     }
 }
 
