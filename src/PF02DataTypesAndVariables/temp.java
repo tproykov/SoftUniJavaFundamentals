@@ -8,18 +8,9 @@ public class temp {
 
         Scanner scanner = new Scanner(System.in);
 
-        String word = scanner.nextLine();
-
-        int startIndex = 0;
-        if (word.charAt(0) == '-')
-            startIndex = 1;
-
-        int sum = 0;
-        for (int i = startIndex; i < word.length(); i++) {
-            char character = word.charAt(i);
-            int digit = Integer.parseInt(character + "");
-            sum += digit;
-        }
-        System.out.println(sum);
+        System.out.println(Double.MAX_VALUE);
+        System.out.println(Double.MIN_VALUE);
+        System.out.println(Float.MAX_VALUE);
+        System.out.println(Float.MIN_VALUE);
     }
 }
