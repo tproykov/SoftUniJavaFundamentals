@@ -8,27 +8,36 @@ public class M02PascalTriangle {
 
         Scanner scanner = new Scanner(System.in);
 
+        // read the size of the triangle from the console
         int n = Integer.parseInt(scanner.nextLine());
 
-        for (int row = 1; row <= n; row++) {
+        // initialise the initial state of the 'previous row'
+        int[] previousRow = {1};
 
-            for (int column = 1; column <= row; column++) {
-
-                System.out.print(1);
-
-            }
-            System.out.println();
-
-
-
-
+        // print out the 'previous row' - initially first row
+        for (int element : previousRow) {
+            System.out.println(element);
         }
 
+        // create the triangle - starting from the second row - row by row
+        for (int i = 1; i < n; i++) {           // rows: one row shorter because row 1
+            int[] currentRow = new int[i + 1];                         // already printed
+            currentRow[0] = 1;                 // assigning 1 to first element of the row
+            currentRow[i] = 1;                 // assigning 1 to the last element of the row
 
+            // continue building the row
+            for (int j = 1; j < i; j++) {      // middle elements of the row: sum of the two
+                currentRow[j] = previousRow[j - 1] + previousRow[j]; // values from the row above
+            }
+            // print out the constructed row
+            for (int element : currentRow) {
+                System.out.print(element + " ");
+            }
+            System.out.println();          // printer caret to the new row
 
-
+            previousRow = currentRow;       // assign the current row as a 'previous row'
+        }
     }
-
 }
 
 // The triangle may be constructed in the following manner: In row 0 (the topmost row), there is a
