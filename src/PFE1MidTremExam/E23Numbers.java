@@ -1,4 +1,4 @@
 package PFE1MidTremExam;
 
-public class E13 {
+public class E23Numbers {
 }

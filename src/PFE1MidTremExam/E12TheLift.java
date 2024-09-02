@@ -1,4 +1,4 @@
 package PFE1MidTremExam;
 
-public class E02 {
+public class E12TheLift {
 }
