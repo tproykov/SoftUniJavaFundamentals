@@ -9,15 +9,57 @@ public class M04LongestSubsequence {
 
         Scanner scanner = new Scanner(System.in);
 
-        int[] sequence = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(Integer::parseInt)
+        // read the numbers array from the console
+        int[] nums = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(Integer::parseInt)
                 .toArray();
 
-
-
+        // Find the Longest Increasing Subsequence (LIS) with the use of a method
+        int[] lis = findLongestIncreasingSubsequence(nums);
+        // Print the LIS
+        for (int num : lis) {
+            System.out.print(num + " ");
+        }
     }
+    public static int[] findLongestIncreasingSubsequence(int[] nums) {
 
+        // len[i] = length of LIS ending at index i
+        int[] len = new int[nums.length];
+        // prev[i] = previous index of LIS ending at index i
+        int[] prev = new int[nums.length];
+        // Initialize len[] elements to 1s and prev[] elements to -1s
+        for (int i = 0; i < nums.length; i++) {
+            len[i] = 1;
+            prev[i] = -1;
+        }
+        // populate len[] and prev[] - compute LIS ending at each index
+        // compute the length of the maximum LIS and the list where the max LIS ends
+        int maxLength = 0; // Length of the maximum LIS found
+        int maxIndex = -1; // Index where the maximum LIS ends
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i] && len[j] + 1 > len[i]) {
+                    len[i] = len[j] + 1;
+                    prev[i] = j;
+                }
+            }
+            // Update the maximum LIS length found
+            if (len[i] > maxLength) {
+                maxLength = len[i];
+                maxIndex = i;
+            }
+        }
+        // reconstruct the LIS from the previous array
+        int[] lis = new int[maxLength];
+        int index = maxLength - 1;
+        for (int i = maxIndex; i >= 0; i = prev[i]) {
+            lis[index--] = nums[i];
+            if (prev[i] == -1) {
+                break;
+            }
+        }
+        return lis;
+    }
 }
-
 // Read a list of integers and find the longest increasing subsequence (LIS). If several such exist,
 // print the leftmost.
 // •	Assume we have n numbers in an array nums[0…n-1].
