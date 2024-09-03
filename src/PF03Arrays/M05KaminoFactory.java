@@ -11,8 +11,7 @@ public class M05KaminoFactory {
 
         Scanner scanner = new Scanner(System.in);
 
-        // length of the DNA sequence at level of input
-        int dnaLength = Integer.parseInt(scanner.nextLine());
+        int dnaLength = Integer.parseInt(scanner.nextLine());    // length of the DNA sequence
 
         String command = scanner.nextLine();
 
@@ -20,23 +19,17 @@ public class M05KaminoFactory {
         int bestLength = 0;
         int bestSum = 0;
         int bestStartIndex = dnaLength;
-        int sampleIndex = 0;            // computes the number of calculation
+        int sampleIndex = 0;                   // computes the number of calculation
         int bestSequenceIndex = 0;
         while (!command.equals("Clone them!")) {
 
             sampleIndex++;
-            String dna = "";
-            for (int i = 0; i < command.length(); i++) {
 
-                char character = command.charAt(i);
-                if (character != '!') {
-                    dna = dna + character + " ";
-                }
-            }
-            int[] dnaCode = Arrays.stream(dna.split(" "))
+            // read the DNA input and transform it into an array of integers
+            int[] dnaCode = Arrays.stream(command.split("!+"))
                     .mapToInt(Integer::parseInt).toArray();
 
-            // Find the longest subsequence of 1s
+            // find the longest subsequence of 1s
             int length = 0;
             int maxLength = 0;
             int startIndex = 0;
