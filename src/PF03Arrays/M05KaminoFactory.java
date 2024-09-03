@@ -11,72 +11,66 @@ public class M05KaminoFactory {
 
         Scanner scanner = new Scanner(System.in);
 
-        int sequenceLength = Integer.parseInt(scanner.nextLine());
+        int dnaLength = Integer.parseInt(scanner.nextLine());
 
         String command = scanner.nextLine();
 
-        List<Integer> longest = new ArrayList<>();
-        List<Integer> last = new ArrayList<>();
-
+        int[] bestDna = new int[dnaLength];
+        int bestLength = 0;
+        int bestSum = 0;
+        int bestStartIndex = dnaLength;
+        int sampleIndex = 0;
+        int bestSequenceIndex = 0;
         while (!command.equals("Clone them!")) {
 
-            // read the sequence from the console and turn it into a digits array
-            int[] dnaSequence = Arrays.stream(command.split("!")).mapToInt(Integer::parseInt)
-                    .toArray();
+            sampleIndex++;
+            String dna = "";
+            for (int i = 0; i < command.length(); i++) {
 
-            // initialise the array of longest sequence of ones ending at index i
-            int[] len = new int[dnaSequence.length];
-            if (dnaSequence[0] == 0) {
-                len[0] = 0;
-            } else {
-                len[0] = 1;
-            }
-            for (int i = 1; i < dnaSequence.length; i++) {
-                if (dnaSequence[i] == 1) {
-                    len[i] = len[i - 1] + 1;
-                } else {
-                    len[i] = 0;
+                char character = command.charAt(i);
+                if (character != '!') {
+                    dna = dna + character + " ";
                 }
             }
+            int[] dnaCode = Arrays.stream(dna.split(" "))
+                    .mapToInt(Integer::parseInt).toArray();
+
+            // Find the longest subsequence of 1s
+            int length = 0;
             int maxLength = 0;
-            int lastIndex = 0;
-            for (int i = 1; i < len.length; i++) {
-
-                if (len[i] > maxLength) {
-                    maxLength = len[i];
-                    lastIndex = i;
+            int startIndex = 0;
+            int sum = 0;
+            for (int i = 0; i < dnaCode.length; i++) {
+                if (dnaCode[i] == 1) {
+                    length++;
+                    sum++;
+                    if (length > maxLength) {
+                        maxLength = length;
+                        startIndex = i - length + 1;
+                    }
+                } else {
+                    length = 0;
                 }
             }
-            longest.add(maxLength);
-            last.add(lastIndex);
+            // Update the best DNA sequence based on the criteria
+            if (maxLength > bestLength
+                    || (maxLength == bestLength && startIndex < bestStartIndex)
+                    || (maxLength == bestLength && startIndex == bestStartIndex && sum > bestSum)) {
+                bestDna = dnaCode;
+                bestLength = maxLength;
+                bestSum = sum;
+                bestStartIndex = startIndex;
+                bestSequenceIndex = sampleIndex;
+            }
             command = scanner.nextLine();
         }
-
-        int maxSequenceLength = 0;
-        for (Integer i : longest) {
-            if (i > maxSequenceLength) {
-                maxSequenceLength = i;
-            }
+        System.out.println("Best DNA sample " + bestSequenceIndex
+                + " with sum: " + bestSum + ".");
+        for (int digit : bestDna) {
+            System.out.print(digit + " ");
         }
-        for (Integer i : longest) {
-            if (i == maxSequenceLength) {
-                int minIndex = Integer.MAX_VALUE;
-                for (Integer integer : last) {
-                    if (integer < minIndex) {
-                        minIndex = integer;
-                    }
-                    
-                }
-            }
-
-        }
-
-
-
-
     }
 }
-
 // The clone factory in Kamino got another order to clone troops. But this time, you are tasked to find
 // the best DNA sequence to use in the production.
 //You will receive the DNA length, and until you receive the command "Clone them!" you will be receiving
