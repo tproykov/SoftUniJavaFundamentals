@@ -11,6 +11,7 @@ public class M05KaminoFactory {
 
         Scanner scanner = new Scanner(System.in);
 
+        // length of the DNA sequence at level of input
         int dnaLength = Integer.parseInt(scanner.nextLine());
 
         String command = scanner.nextLine();
@@ -19,7 +20,7 @@ public class M05KaminoFactory {
         int bestLength = 0;
         int bestSum = 0;
         int bestStartIndex = dnaLength;
-        int sampleIndex = 0;
+        int sampleIndex = 0;            // computes the number of calculation
         int bestSequenceIndex = 0;
         while (!command.equals("Clone them!")) {
 
