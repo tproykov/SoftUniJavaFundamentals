@@ -15,7 +15,7 @@ public class M05KaminoFactory {
 
         String command = scanner.nextLine();
 
-        int[] bestDna = new int[dnaLength];
+        int[] bestDna = new int[dnaLength];    // similar to maxValue
         int bestLength = 0;
         int bestSum = 0;
         int bestStartIndex = dnaLength;
