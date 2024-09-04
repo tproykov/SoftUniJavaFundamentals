@@ -1,8 +1,6 @@
 package PF03Arrays;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 public class M05KaminoFactory {
@@ -23,7 +21,7 @@ public class M05KaminoFactory {
         int bestSequenceIndex = 0;
         while (!command.equals("Clone them!")) {
 
-            sampleIndex++;
+            sampleIndex++;        // the count of the current iteration inside the while loop
 
             // read the DNA input and transform it into an array of integers
             int[] dnaCode = Arrays.stream(command.split("!+"))
@@ -46,7 +44,7 @@ public class M05KaminoFactory {
                     length = 0;
                 }
             }
-            // Update the best DNA sequence based on the criteria
+            // Update the best DNA sequence based on the three criteria
             if (maxLength > bestLength
                     || (maxLength == bestLength && startIndex < bestStartIndex)
                     || (maxLength == bestLength && startIndex == bestStartIndex && sum > bestSum)) {
@@ -54,7 +52,7 @@ public class M05KaminoFactory {
                 bestLength = maxLength;
                 bestSum = sum;
                 bestStartIndex = startIndex;
-                bestSequenceIndex = sampleIndex;
+                bestSequenceIndex = sampleIndex;      // best sequence is the current sequence
             }
             command = scanner.nextLine();
         }
