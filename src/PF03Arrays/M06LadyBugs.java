@@ -14,11 +14,8 @@ public class M06LadyBugs {
         int[] ladybugIndexes = Arrays.stream(scanner.nextLine().split(" "))
                 .mapToInt(Integer::parseInt).toArray();
 
-        // populate the ladybug field
+        // Populate the ladybug field
         int[] ladybugField = new int[fieldSize];
-        for (int i : ladybugField) {
-            i = 0;                          // initiate the field array with zeroes
-        }
         for (int index : ladybugIndexes) {
             if (index >= 0 && index < ladybugField.length) {
                 ladybugField[index] = 1;
@@ -29,62 +26,52 @@ public class M06LadyBugs {
 
         while (!command.equals("end")) {
 
-            // break down the ladybug command into parts
+            // Break down the ladybug command into parts
             String[] commandParts = command.split(" ");
             int ladybugIndex = Integer.parseInt(commandParts[0]);
             String ladybugDirection = commandParts[1];
             int flyLength = Integer.parseInt(commandParts[2]);
 
-            if (ladybugIndex < 0 || ladybugIndex >= fieldSize) {
+            if (ladybugIndex < 0 || ladybugIndex >= fieldSize || ladybugField[ladybugIndex] == 0) {
+                command = scanner.nextLine();
                 continue;
-            } else if (ladybugField[ladybugIndex] == 0) {
-                continue;
-            } else {
-                ladybugField[ladybugIndex] = 0;
-                switch (ladybugDirection) {
-                    case "left":
-                        if (ladybugIndex - flyLength >= 0) {
-                            if (ladybugField[ladybugIndex - flyLength] == 0) {
-                                ladybugField[ladybugIndex - flyLength] = 1;
-                            }
-                        }
-                        else {
-                            int currentIndex = ladybugIndex - flyLength;
-                            while (currentIndex >= 0) {
-                                if (ladybugField[currentIndex] == 1) {
-                                    currentIndex -= flyLength;
-                                }
-                            }
-                            if (currentIndex >= 0) {
-                                ladybugField[currentIndex] = 1;
-                            }
-                        }
-                        break;
-                    case "right":
-                        if (ladybugIndex + flyLength < fieldSize) {
-                            if   (ladybugField[ladybugIndex + flyLength] == 0) {
-                                ladybugField[ladybugIndex + flyLength] = 1;
-                            }
-                        }
-                        else {
-                            int currentIndex = ladybugIndex + flyLength;
-                            while (currentIndex < fieldSize) {
-                                if (ladybugField[currentIndex] == 1) {
-                                    currentIndex += flyLength;
-                                }
-                            }
-                            if (currentIndex < fieldSize) {
-                                ladybugField[currentIndex] = 1;
-                            }
-                        }
-                        break;
-                }
             }
+
+            // Free the initial position
+            ladybugField[ladybugIndex] = 0;
+
+            int currentIndex = ladybugIndex;
+
+            while (true) {
+                if (ladybugDirection.equals("left")) {
+                    currentIndex -= flyLength;
+                } else if (ladybugDirection.equals("right")) {
+                    currentIndex += flyLength;
+                }
+
+                if (currentIndex < 0 || currentIndex >= fieldSize) {
+                    // Ladybug flies out of the field
+                    break;
+                }
+
+                if (ladybugField[currentIndex] == 0) {
+                    // Ladybug lands on an empty spot
+                    ladybugField[currentIndex] = 1;
+                    break;
+                }
+                // If the spot is occupied, continue moving
+            }
+
             command = scanner.nextLine();
         }
-        System.out.println(Arrays.toString(ladybugField));
+
+        for (int i : ladybugField) {
+            System.out.print(i + " ");
+        }
     }
 }
+
+
 
 // You are given a field size and the indexes of ladybugs inside the field. After that, on every new line
 // until the "end" command is given, a ladybug changes its position to its left or right by a given fly
