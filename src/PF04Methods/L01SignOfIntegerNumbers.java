@@ -10,7 +10,7 @@ public class L01SignOfIntegerNumbers {
 
         int n = Integer.parseInt(scanner.nextLine());
 
-        System.out.println(signOfInteger(n));
+        signOfInteger(n);
     }
     private static void signOfInteger(int n) {
         if (n > 0) {
@@ -23,3 +23,5 @@ public class L01SignOfIntegerNumbers {
         }
     }
 }
+
+// Create a method that prints the sign of an integer number.
