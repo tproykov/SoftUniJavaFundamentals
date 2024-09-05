@@ -17,14 +17,10 @@ public class M02CenterPoint {
     }
     private static String printCloseToCenter(int x1, int y1, int x2, int y2) {
 
-        double closest = Double.MAX_VALUE;
         double distance1 = Math.sqrt(Math.pow(x1, 2) + Math.pow(y1, 2));
         double distance2 = Math.sqrt(Math.pow(x2, 2) + Math.pow(y2, 2));
 
-        boolean isFirst = false;
-        if (distance1 <= distance2) {
-            isFirst = true;
-        }
+        boolean isFirst = distance1 <= distance2;
         if (isFirst) {
             return String.format("(%d, %d)", x1, y1);
         }
