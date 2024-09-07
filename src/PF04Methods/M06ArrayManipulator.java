@@ -35,31 +35,7 @@ public class M06ArrayManipulator {
                     break;
                 case "min":
                     evenOrOdd = commandParts[1];
-                    int min = Integer.MAX_VALUE;
-                    if (evenOrOdd.equals("even")) {
-                        for (int j : array) {
-                            if (j % 2 == 0) {
-                                min = Math.min(min, j);
-                            }
-                        }
-                    } else if (evenOrOdd.equals("odd")) {
-                        for (int j : array) {
-                            if (j % 2 != 0) {
-                                min = Math.min(min, j);
-                            }
-                        }
-                    }
-                    noMatches = true;
-                    for (int i = array.length - 1; i >= 0; i--) {
-                        if (array[i] == min) {
-                            System.out.println(i);
-                            noMatches = false;
-                            break;
-                        }
-                    }
-                    if (noMatches) {
-                        System.out.println("No matches");
-                    }
+                    min(array, evenOrOdd);
                     break;
                 case "first":
                     count = Integer.parseInt(commandParts[1]);
@@ -185,12 +161,45 @@ public class M06ArrayManipulator {
                     return;
                 }
             }
+        } else {
+            System.out.println("No matches");
         }
-        else {
+    }
+
+    private static void min(int[] array, String evenOrOdd) {
+        int min = Integer.MAX_VALUE;
+        boolean noMatches = true;
+        switch (evenOrOdd) {
+            case "even":
+                for (int number : array) {
+                    if (number % 2 == 0) {
+                        noMatches = false;
+                        min = Math.min(min, number);
+                    }
+                }
+                break;
+            case "odd":
+                for (int number : array) {
+                    if (number % 2 != 0) {
+                        noMatches = false;
+                        min = Math.min(min, number);
+                    }
+                }
+                break;
+        }
+        if (!noMatches) {
+            for (int i = array.length - 1; i >= 0; i--) {
+                if (array[i] == min) {
+                    System.out.println(i);
+                    return;
+                }
+            }
+        } else {
             System.out.println("No matches");
         }
     }
 }
+
 
 // Trifon has finally become a junior developer and has received his first task.
 // It's about manipulating an array of integers. He is not quite happy about
