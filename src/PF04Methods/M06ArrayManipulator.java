@@ -31,7 +31,7 @@ public class M06ArrayManipulator {
                     break;
                 case "max":
                     evenOrOdd = commandParts[1];
-                    System.out.println(max(array, evenOrOdd));
+                    max(array, evenOrOdd);
                     break;
                 case "min":
                     evenOrOdd = commandParts[1];
@@ -157,12 +157,14 @@ public class M06ArrayManipulator {
         }
     }
 
-    private static int max(int[] array, String evenOrOdd) {
+    private static void max(int[] array, String evenOrOdd) {
         int max = Integer.MIN_VALUE;
+        boolean noMatches = true;
         switch (evenOrOdd) {
             case "even":
                 for (int number : array) {
                     if (number % 2 == 0) {
+                        noMatches = false;
                         max = Math.max(max, number);
                     }
                 }
@@ -170,23 +172,23 @@ public class M06ArrayManipulator {
             case "odd":
                 for (int number : array) {
                     if (number % 2 != 0) {
+                        noMatches = false;
                         max = Math.max(max, number);
                     }
                 }
                 break;
         }
-        boolean noMatches = true;
-        for (int i = array.length - 1; i >= 0; i--) {
-            if (array[i] == max) {
-                System.out.println(i);
-                noMatches = false;
-                break;
+        if (!noMatches) {
+            for (int i = array.length - 1; i >= 0; i--) {
+                if (array[i] == max) {
+                    System.out.println(i);
+                    return;
+                }
             }
         }
-        if (noMatches) {
+        else {
             System.out.println("No matches");
         }
-        return 0;
     }
 }
 
