@@ -39,35 +39,8 @@ public class M06ArrayManipulator {
                     break;
                 case "first":
                     count = Integer.parseInt(commandParts[1]);
-                    if (count > array.length) {
-                        System.out.println("Invalid count");
-                        continue;
-                    }
                     evenOrOdd = commandParts[2];
-                    int[] first = new int[count];
-                    counter = 0;
-                    while (counter < count - 1) {
-                        for (int i = 0; i < array.length; i++) {
-                            if (counter < count - 1) {
-                                if (evenOrOdd.equals("even")) {
-                                    if (array[i] % 2 == 0) {
-                                        first[counter] = array[i];
-                                        counter++;
-                                    }
-                                } else if (evenOrOdd.equals("odd")) {
-                                    if (array[i] % 2 != 0) {
-                                        first[counter] = array[i];
-                                        counter++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (counter < count) {
-                        System.out.println("[]");
-                    } else {
-                        System.out.println(Arrays.toString(first));
-                    }
+                    first(array, count, evenOrOdd);
                     break;
                 case "last":
                     count = Integer.parseInt(commandParts[1]);
@@ -197,6 +170,36 @@ public class M06ArrayManipulator {
         } else {
             System.out.println("No matches");
         }
+    }
+
+    private static void first(int[] array, int count, String evenOrOdd) {
+        if (count > array.length) {
+            System.out.println("Invalid count");
+            return;
+        }
+        int counter = 0;
+        System.out.println("[");
+        while (counter < count) {
+            switch (evenOrOdd) {
+                case "even":
+                    for (int number : array) {
+                        if (number % 2 == 0) {
+                            first[counter] = number;
+                            counter++;
+                        }
+                    }
+                    break;
+                case "odd":
+                    for (int number : array) {
+                        if (number % 2 != 0) {
+                            first[counter] = number;
+                            counter++;
+                        }
+                    }
+                    break;
+            }
+        }
+        System.out.println(Arrays.toString(first));
     }
 }
 
