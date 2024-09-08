@@ -170,6 +170,10 @@ public class M06ArrayManipulator {
     }
 
     private static void firstOdd(int[] array, int countFirst) {
+        if (countFirst > array.length) {
+            System.out.println("Invalid count");
+            return;
+        }
         int[] resultArray = new int[countFirst];
         int resultIndex = 0;
         for (int i = 0; i < array.length && resultIndex < countFirst; i++) {
@@ -186,6 +190,10 @@ public class M06ArrayManipulator {
     }
 
     private static void firstEven(int[] array, int countFirst) {
+        if (countFirst > array.length) {
+            System.out.println("Invalid count");
+            return;
+        }
         int[] resultArray = new int[countFirst];
         int resultIndex = 0;
         for (int i = 0; i < array.length && resultIndex < countFirst; i++) {
@@ -202,6 +210,10 @@ public class M06ArrayManipulator {
     }
 
     private static void lastOdd(int[] array, int countLast) {
+        if (countLast > array.length) {
+            System.out.println("Invalid count");
+            return;
+        }
         int[] resultArray = new int[countLast];
         int resultIndex = 0;
         for (int i = array.length - 1; i >= 0 && resultIndex < countLast; i--) {
@@ -216,7 +228,26 @@ public class M06ArrayManipulator {
         }
         System.out.println(Arrays.toString(finalResultArray));
     }
-}
+
+    private static void lastEven(int[] array, int countLast) {
+        if (countLast > array.length) {
+            System.out.println("Invalid count");
+            return;
+        }
+        int[] resultArray = new int[countLast];
+        int resultIndex = 0;
+        for (int i = array.length - 1; i >= 0 && resultIndex < countLast; i--) {
+            if (array[i] % 2 == 0) {
+                resultArray[resultIndex] = array[i];
+                resultIndex++;
+            }
+        }
+        int[] finalResultArray = new int[resultIndex];
+        for (int i = 0; i < resultIndex; i++) {
+            finalResultArray[i] = resultArray[resultIndex - i - 1];
+        }
+        System.out.println(Arrays.toString(finalResultArray));
+    }
 }
 
 
