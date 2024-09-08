@@ -21,28 +21,41 @@ public class M06ArrayManipulator {
             String commandType = commandParts[0];
 
             String evenOrOdd;
-            boolean noMatches;
-            int count;
-            int counter;
+            int countFirst;
             switch (commandType) {
                 case "exchange":
                     int index = Integer.parseInt(commandParts[1]);
-                    exchange(array, index);
+                    array = exchange(array, index);
                     break;
                 case "max":
                     evenOrOdd = commandParts[1];
-                    max(array, evenOrOdd);
+                    if (evenOrOdd.equals("odd")) {
+                        maxOdd(array);
+                    } else if (evenOrOdd.equals("even")) {
+                        maxEven(array);
+                    }
                     break;
                 case "min":
                     evenOrOdd = commandParts[1];
-                    min(array, evenOrOdd);
+                    if (evenOrOdd.equals("odd")) {
+                        minOdd(array);
+                    } else if (evenOrOdd.equals("even")) {
+                        minEven(array);
+                    }
                     break;
                 case "first":
-                    count = Integer.parseInt(commandParts[1]);
+                    countFirst = Integer.parseInt(commandParts[1]);
                     evenOrOdd = commandParts[2];
-                    first(array, count, evenOrOdd);
+                    if (evenOrOdd.equals("odd")) {
+                        firstOdd(array, countFirst);
+                    } else if (evenOrOdd.equals("even")) {
+                        firstEven(array, countFirst);
+                    }
                     break;
                 case "last":
+                    int count;
+                    int counter;
+
                     count = Integer.parseInt(commandParts[1]);
                     if (count > array.length) {
                         System.out.println("Invalid count");
@@ -85,121 +98,139 @@ public class M06ArrayManipulator {
         System.out.println(Arrays.toString(array));
     }
 
-    private static void exchange(int[] array, int index) {
-        if (index < 0 || index >= array.length - 1) {
+    private static int[] exchange(int[] array, int index) {
+        int[] exchangedArray = new int[array.length];
+        if (index < 0 || index > array.length - 1) {
             System.out.println("Invalid index");
-            return;
+            return array;
+        } else {
+            int exchangeIndex = 0;
+            for (int i = index + 1; i < array.length; i++) {
+                exchangedArray[exchangeIndex] = array[i];
+                exchangeIndex++;
+            }
+            for (int i = 0; i <= index; i++) {
+                exchangedArray[exchangeIndex] = array[i];
+                exchangeIndex++;
+            }
         }
-        int[] firstPart = new int[index + 1];
-        for (int i = 0; i < firstPart.length; i++) {
-            firstPart[i] = array[i];
-        }
-        int[] secondPart = new int[array.length - index - 1];
-        for (int i = index + 1; i < array.length; i++) {
-            secondPart[i - index - 1] = array[i];
-        }
-        for (int i = 0; i < secondPart.length; i++) {
-            array[i] = secondPart[i];
-        }
-        for (int i = 0; i < firstPart.length; i++) {
-            array[secondPart.length + i] = firstPart[i];
-        }
+        return exchangedArray;
     }
 
-    private static void max(int[] array, String evenOrOdd) {
+    private static void maxOdd(int[] array) {
         int max = Integer.MIN_VALUE;
         boolean noMatches = true;
-        switch (evenOrOdd) {
-            case "even":
-                for (int number : array) {
-                    if (number % 2 == 0) {
-                        noMatches = false;
-                        max = Math.max(max, number);
-                    }
-                }
-                break;
-            case "odd":
-                for (int number : array) {
-                    if (number % 2 != 0) {
-                        noMatches = false;
-                        max = Math.max(max, number);
-                    }
-                }
-                break;
+        for (int number : array) {
+            if (number % 2 != 0) {
+                noMatches = false;
+                max = Math.max(max, number);
+            }
         }
-        if (!noMatches) {
+        if (noMatches) {
+            System.out.println("No matches");
+        } else {
             for (int i = array.length - 1; i >= 0; i--) {
                 if (array[i] == max) {
                     System.out.println(i);
                     return;
                 }
             }
-        } else {
-            System.out.println("No matches");
         }
     }
 
-    private static void min(int[] array, String evenOrOdd) {
+    private static void maxEven(int[] array) {
+        int max = Integer.MIN_VALUE;
+        boolean noMatches = true;
+        for (int number : array) {
+            if (number % 2 == 0) {
+                noMatches = false;
+                max = Math.max(max, number);
+            }
+        }
+        if (noMatches) {
+            System.out.println("No matches");
+        } else {
+            for (int i = array.length - 1; i >= 0; i--) {
+                if (array[i] == max) {
+                    System.out.println(i);
+                    return;
+                }
+            }
+        }
+    }
+
+    private static void minOdd(int[] array) {
         int min = Integer.MAX_VALUE;
         boolean noMatches = true;
-        switch (evenOrOdd) {
-            case "even":
-                for (int number : array) {
-                    if (number % 2 == 0) {
-                        noMatches = false;
-                        min = Math.min(min, number);
-                    }
-                }
-                break;
-            case "odd":
-                for (int number : array) {
-                    if (number % 2 != 0) {
-                        noMatches = false;
-                        min = Math.min(min, number);
-                    }
-                }
-                break;
+        for (int number : array) {
+            if (number % 2 != 0) {
+                noMatches = false;
+                min = Math.min(min, number);
+            }
         }
-        if (!noMatches) {
+        if (noMatches) {
+            System.out.println("No matches");
+        } else {
             for (int i = array.length - 1; i >= 0; i--) {
                 if (array[i] == min) {
                     System.out.println(i);
                     return;
                 }
             }
-        } else {
-            System.out.println("No matches");
         }
     }
 
-    private static void first(int[] array, int count, String evenOrOdd) {
-        if (count > array.length) {
-            System.out.println("Invalid count");
-            return;
-        }
-        int counter = 0;
-        System.out.println("[");
-        while (counter < count) {
-            switch (evenOrOdd) {
-                case "even":
-                    for (int number : array) {
-                        if (number % 2 == 0) {
-                            first[counter] = number;
-                            counter++;
-                        }
-                    }
-                    break;
-                case "odd":
-                    for (int number : array) {
-                        if (number % 2 != 0) {
-                            first[counter] = number;
-                            counter++;
-                        }
-                    }
-                    break;
+    private static void minEven(int[] array) {
+        int min = Integer.MAX_VALUE;
+        boolean noMatches = true;
+        for (int number : array) {
+            if (number % 2 == 0) {
+                noMatches = false;
+                min = Math.min(min, number);
             }
         }
-        System.out.println(Arrays.toString(first));
+        if (noMatches) {
+            System.out.println("No matches");
+        } else {
+            for (int i = array.length - 1; i >= 0; i--) {
+                if (array[i] == min) {
+                    System.out.println(i);
+                    return;
+                }
+            }
+        }
+    }
+
+    private static void firstOdd(int[] array, int countFirst) {
+        int[] resultArray = new int[countFirst];
+        int resultIndex = 0;
+        for (int i = 0; i < array.length && resultIndex < countFirst; i++) {
+            if (array[i] % 2 != 0) {
+                resultArray[resultIndex] = array[i];
+                resultIndex++;
+            }
+        }
+        int[] finalResultArray = new int[resultIndex];
+        for (int i = 0; i < resultIndex; i++) {
+            finalResultArray[i] = resultArray[i];
+        }
+        System.out.println(Arrays.toString(finalResultArray));
+    }
+
+    private static void firstEven(int[] array, int countFirst) {
+        int[] resultArray = new int[countFirst];
+        int resultIndex = 0;
+        for (int i = 0; i < array.length && resultIndex < countFirst; i++) {
+            if (array[i] % 2 == 0) {
+                resultArray[resultIndex] = array[i];
+                resultIndex++;
+            }
+        }
+        int[] finalResultArray = new int[resultIndex];
+        for (int i = 0; i < resultIndex; i++) {
+            finalResultArray[i] = resultArray[i];
+        }
+        System.out.println(Arrays.toString(finalResultArray));
     }
 }
 
