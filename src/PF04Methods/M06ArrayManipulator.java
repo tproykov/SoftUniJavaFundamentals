@@ -21,7 +21,6 @@ public class M06ArrayManipulator {
             String commandType = commandParts[0];
 
             String evenOrOdd;
-            int countFirst;
             switch (commandType) {
                 case "exchange":
                     int index = Integer.parseInt(commandParts[1]);
@@ -44,7 +43,7 @@ public class M06ArrayManipulator {
                     }
                     break;
                 case "first":
-                    countFirst = Integer.parseInt(commandParts[1]);
+                    int countFirst = Integer.parseInt(commandParts[1]);
                     evenOrOdd = commandParts[2];
                     if (evenOrOdd.equals("odd")) {
                         firstOdd(array, countFirst);
@@ -53,43 +52,12 @@ public class M06ArrayManipulator {
                     }
                     break;
                 case "last":
-                    int count;
-                    int counter;
-
-                    count = Integer.parseInt(commandParts[1]);
-                    if (count > array.length) {
-                        System.out.println("Invalid count");
-                        continue;
-                    }
+                    int countLast = Integer.parseInt(commandParts[1]);
                     evenOrOdd = commandParts[2];
-                    int[] last = new int[count];
-                    counter = 0;
-                    while (counter < count - 1) {
-                        for (int i = array.length - 1; i >= 0; i++) {
-                            if (counter < count - 1) {
-                                if (evenOrOdd.equals("even")) {
-                                    if (array[i] % 2 == 0) {
-                                        last[counter] = array[i];
-                                        count++;
-                                    }
-                                } else if (evenOrOdd.equals("odd")) {
-                                    if (array[i] % 2 != 0) {
-                                        last[counter] = array[i];
-                                        count++;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    if (counter < count - 1) {
-                        System.out.println("[]");
-                    } else {
-                        for (int left = 0, right = last.length - 1;
-                             left < right; left++, right--) {
-                            int temp = last[left];
-                            last[left] = last[right];
-                            last[right] = temp;
-                        }
+                    if (evenOrOdd.equals("odd")) {
+                        lastOdd(array, countLast);
+                    } else if (evenOrOdd.equals("even")) {
+                        lastEven(array, countLast);
                     }
                     break;
             }
@@ -232,6 +200,23 @@ public class M06ArrayManipulator {
         }
         System.out.println(Arrays.toString(finalResultArray));
     }
+
+    private static void lastOdd(int[] array, int countLast) {
+        int[] resultArray = new int[countLast];
+        int resultIndex = 0;
+        for (int i = array.length - 1; i >= 0 && resultIndex < countLast; i--) {
+            if (array[i] % 2 != 0) {
+                resultArray[resultIndex] = array[i];
+                resultIndex++;
+            }
+        }
+        int[] finalResultArray = new int[resultIndex];
+        for (int i = 0; i < resultIndex; i++) {
+            finalResultArray[i] = resultArray[resultIndex - i - 1];
+        }
+        System.out.println(Arrays.toString(finalResultArray));
+    }
+}
 }
 
 
