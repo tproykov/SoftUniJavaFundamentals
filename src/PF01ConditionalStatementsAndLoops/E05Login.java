@@ -1,6 +1,5 @@
 package PF01ConditionalStatementsAndLoops;
 
-import java.util.Collections;
 import java.util.Scanner;
 
 public class E05Login {
@@ -14,6 +13,24 @@ public class E05Login {
         String password = "";
         for (int i = username.length() - 1; i >= 0; i--) {
             password += username.charAt(i);
+        }
+
+        for (int i = 0; i < 3; i++) {
+
+            String input = scanner.nextLine();
+
+            if (password.equals(input)) {
+                System.out.printf("User " + username + " logged in.\n");
+                return;
+            }
+            System.out.println("Incorrect password. Try again.");
+        }
+        String input = scanner.nextLine();
+        if (input.equals(password)) {
+            System.out.printf("User " + username + " logged in.\n");
+        }
+        else {
+            System.out.println("User " + username + " blocked!");
         }
     }
 }
