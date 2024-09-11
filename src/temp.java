@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class temp {
@@ -7,28 +6,25 @@ public class temp {
 
         Scanner scanner = new Scanner(System.in);
 
-        int[] array = {1, 3, 5, 7, 9};
-        int index = 4;
-        System.out.println(Arrays.toString(array));
-        System.out.println(Arrays.toString(exchange(array, index)));
-
-    }
-    private static int[] exchange(int[] array, int index) {
-        int[] exchangedArray = new int[array.length];
-        if (index < 0 || index > array.length - 1) {
-            System.out.println("Invalid index");
-            return array;
-        } else {
-            int exchangeIndex = 0;
-            for (int i = index + 1; i < array.length; i++) {
-                exchangedArray[exchangeIndex] = array[i];
-                exchangeIndex++;
-            }
-            for (int i = 0; i <= index; i++) {
-                exchangedArray[exchangeIndex] = array[i];
-                exchangeIndex++;
-            }
+        int sum = 0;
+        int n = 2;
+        while (n > 0) {
+            sum += factorial(n % 10);
+            n /= 10;
         }
-        return exchangedArray;
+        System.out.println(sum);
+        if (sum == n) {
+            System.out.println("yes");
+        }
+        else {
+            System.out.println("no");
+        }
+    }
+    private static int factorial(int n) {
+        int product = 1;
+        for (int i = 2; i <= n; i++) {
+            product *= i;
+        }
+        return product;
     }
 }
