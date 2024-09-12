@@ -19,7 +19,8 @@ public class E10PadawanEquipment {
 
         double totalRobePrice = robePrice * studentCount;
 
-        int beltsToPay = studentCount - studentCount / 6;
+        int freeBelts = studentCount / 6;
+        int beltsToPay = studentCount - freeBelts;
 
         double totalBeltPrice = beltPrice * beltsToPay;
 
@@ -27,7 +28,7 @@ public class E10PadawanEquipment {
 
         double diff = Math.abs(totalEquipmentPrice - budget);
 
-        if (budget >= totalLightSabrePrice) {
+        if (budget >= totalEquipmentPrice) {
             System.out.printf("The money is enough - it would cost %.2flv.", totalEquipmentPrice);
         }
         else {
