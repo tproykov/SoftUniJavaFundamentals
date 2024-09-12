@@ -25,7 +25,7 @@ public class E11RageExpenses {
                         + keyboardPrice * keyboardsToReplace
                         + displayPrice * displaysToReplace;
 
-        System.out.printf("Rage expenses: %.2flv.", rageExpenses);
+        System.out.printf("Rage expenses: %.2f lv.", rageExpenses);
     }
 }
 
