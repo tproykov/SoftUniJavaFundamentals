@@ -20,3 +20,6 @@ public class E02CommonElements {
         }
     }
 }
+
+// Write a program that prints common elements in two arrays. You have to compare the elements of the
+// second array to the elements of the first.
