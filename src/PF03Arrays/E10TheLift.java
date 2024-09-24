@@ -17,33 +17,32 @@ public class E10TheLift {
         for (int i = 0; i < lift.length; i++) {
 
             int available = 4 - lift[i];
-            if (n > 4 - available) {
+            if (n >= available) {
                 lift[i] = 4;
-                n -= (available);
-            }
-            else if (n <= available && n > 0) {
-                lift[i] = lift[i] + available;
+                n -= available;
+            } else {
+                lift[i] += n;
                 n = 0;
-                break;
-            }
-            else if (n == 0) {
-                break;
             }
         }
         boolean isFull = true;
         for (int i : lift) {
             if (i < 4) {
                 isFull = false;
+                break;
             }
         }
-        if (isFull) {
+        if (isFull && n > 0) {
             System.out.println("There isn't enough space! " + n + " people in a queue!");
             for (int j : lift) {
                 System.out.print(j + " ");
             }
-        }
-        else {
+        } else if (!isFull) {
             System.out.println("The lift has empty spots!");
+            for (int j : lift) {
+                System.out.print(j + " ");
+            }
+        } else {
             for (int j : lift) {
                 System.out.print(j + " ");
             }
