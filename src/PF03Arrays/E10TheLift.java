@@ -1,5 +1,6 @@
 package PF03Arrays;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class E10TheLift {
@@ -8,10 +9,46 @@ public class E10TheLift {
 
         Scanner scanner = new Scanner(System.in);
 
+        int n = Integer.parseInt(scanner.nextLine());
 
+        int[] lift = Arrays.stream(scanner.nextLine().split(" ")).mapToInt(Integer::parseInt)
+                .toArray();
 
+        for (int i = 0; i < lift.length; i++) {
+
+            int available = 4 - lift[i];
+            if (n > 4 - available) {
+                lift[i] = 4;
+                n -= (available);
+            }
+            else if (n <= available && n > 0) {
+                lift[i] = lift[i] + available;
+                n = 0;
+                break;
+            }
+            else if (n == 0) {
+                break;
+            }
+        }
+        boolean isFull = true;
+        for (int i : lift) {
+            if (i < 4) {
+                isFull = false;
+            }
+        }
+        if (isFull) {
+            System.out.println("There isn't enough space! " + n + " people in a queue!");
+            for (int j : lift) {
+                System.out.print(j + " ");
+            }
+        }
+        else {
+            System.out.println("The lift has empty spots!");
+            for (int j : lift) {
+                System.out.print(j + " ");
+            }
+        }
     }
-
 }
 
 // Write a program that finds a place for the tourist on a lift.
