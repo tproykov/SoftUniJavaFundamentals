@@ -24,53 +24,36 @@ public class E09PokemonDontGo {
                 sum += removed;
                 int copied = distances.getLast();
                 distances.set(0, copied);
-                for (int i = 0; i < distances.size(); i++) {
-                    int distance = distances.get(i);
-                    if (distance <= removed) {
-                        distance += removed;
-                        distances.set(i, distance);
-                    }
-                    else {
-                        distance -= removed;
-                        distances.set(i, distance);
-                    }
-                }
+                modifyDistances(distances, removed);
             }
             else if (index > distances.size() - 1) {
                 int removed = distances.getLast();
                 sum += removed;
                 int copied = distances.getFirst();
                 distances.set(distances.size() - 1, copied);
-                for (int i = 0; i < distances.size(); i++) {
-                    int distance = distances.get(i);
-                    if (distance <= removed) {
-                        distance += removed;
-                        distances.set(i, distance);
-                    }
-                    else {
-                        distance -= removed;
-                        distances.set(i, distance);
-                    }
-                }
+                modifyDistances(distances, removed);
             }
             else {
                 int removed = distances.get(index);
                 sum += removed;
                 distances.remove(index);
-                for (int i = 0; i < distances.size(); i++) {
-                    int distance = distances.get(i);
-                    if (distance <= removed) {
-                        distance += removed;
-                        distances.set(i, distance);
-                    }
-                    else {
-                        distance -= removed;
-                        distances.set(i, distance);
-                    }
-                }
+                modifyDistances(distances, removed);
             }
         }
         System.out.println(sum);
+    }
+    private static void modifyDistances(List<Integer> distances, int removed) {
+        for (int i = 0; i < distances.size(); i++) {
+            int distance = distances.get(i);
+            if (distance <= removed) {
+                distance += removed;
+                distances.set(i, distance);
+            }
+            else {
+                distance -= removed;
+                distances.set(i, distance);
+            }
+        }
     }
 }
 
