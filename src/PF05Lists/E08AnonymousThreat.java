@@ -3,6 +3,7 @@ package PF05Lists;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class E08AnonymousThreat {
 
@@ -10,12 +11,13 @@ public class E08AnonymousThreat {
 
         Scanner scanner = new Scanner(System.in);
 
-        List<String> strings = Arrays.asList(scanner.nextLine().split("\\s+"));
+        List<String> strings = Arrays.stream(scanner.nextLine().split("\\s+")).collect(Collectors.toList());
 
-        String command = scanner.nextLine();
+        // String command = scanner.nextLine();
 
-        while (!command.equals("3:1")) {
-
+        // while (!command.equals("3:1")) {
+        String command;
+        while (!(command = scanner.nextLine()).equals("3:1")) {
             String[] tokens = command.split("\\s+");
             switch (tokens[0]) {
                 case "merge" -> {
@@ -27,45 +29,43 @@ public class E08AnonymousThreat {
                     if (endIndex > strings.size() - 1) {
                         endIndex = strings.size() - 1;
                     }
-                    String mergedString = "";
-                    for (int i = startIndex; i <= endIndex; i++) {
-                        mergedString += strings.get(i);
+                    if (startIndex <= strings.size() - 1 && endIndex >= 0 && endIndex <= strings.size() - 1) {
+                        String mergedString = "";
+                        for (int i = startIndex; i <= endIndex; i++) {
+                            String current = strings.get(i);
+                            mergedString += current;
+                        }
+                        for (int i = startIndex; i <= endIndex; i++) {
+                            strings.remove(startIndex);
+                        }
+                        strings.add(startIndex, mergedString);
                     }
-                    for (int i = endIndex; i >= startIndex; i--) {
-                        strings.remove(i);
-                    }
-                    strings.add(startIndex, mergedString);
                 }
                 case "divide" -> {
                     int index = Integer.parseInt(tokens[1]);
                     int partitions = Integer.parseInt(tokens[2]);
+
                     String stringToDivide = strings.get(index);
                     int partitionLength = stringToDivide.length() / partitions;
                     strings.remove(index);
-                    for (int i = 0; i < partitions; i++) {
-                        strings.add(index, stringToDivide);
+
+                    int startIndex = 0;
+                    for (int i = 1; i < partitions; i++) {
+                        String partition = stringToDivide.substring(startIndex, startIndex
+                                + partitionLength);
+                        strings.add(index, partition);
+                        index++;
+                        startIndex += partitionLength;
                     }
-
-
-
-
-
+                    String lastPartition = stringToDivide.substring(startIndex, stringToDivide.length());
+                    strings.add(index, lastPartition);
                 }
+
             }
-
-
-
-
-
-
-            command = scanner.nextLine();
+            // command = scanner.nextLine();
         }
-
-
-
+        System.out.println(String.join(" ", strings));
     }
-
-
 }
 
 // Anonymous has created a cyber-hyper virus that steals data from the CIA. As the lead security developer
