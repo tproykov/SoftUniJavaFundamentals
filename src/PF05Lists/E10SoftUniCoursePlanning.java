@@ -78,6 +78,11 @@ public class E10SoftUniCoursePlanning {
             System.out.print(".");
             System.out.println(schedule.get(i));
         }
+//        int counter = 1;
+//        for (String course : schedule) {
+//            System.out.println(counter + "." + course);
+//            counter++;
+//        }
     }
 }
 
