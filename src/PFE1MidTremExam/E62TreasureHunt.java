@@ -1,6 +1,7 @@
 package PFE1MidTremExam;
 
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class E62TreasureHunt {
 
@@ -8,10 +9,60 @@ public class E62TreasureHunt {
 
         Scanner scanner = new Scanner(System.in);
 
+        List<String> treasureChest = Arrays.stream(scanner.nextLine().split("\\|"))
+                .collect(Collectors.toList());
 
+        String command;
 
+        while (!"Yohoho!".equals(command = scanner.nextLine())) {
+
+            String[] tokens = command.split("\\s+");
+            String commandType = tokens[0];
+            switch (commandType) {
+                case "Loot" -> {
+                    for (int i = 1; i < tokens.length; i++) {
+                        String lootItem = tokens[i];
+                        if (!treasureChest.contains(lootItem)) {
+                            treasureChest.addFirst(lootItem);
+                        }
+                    }
+                }
+                case "Drop" -> {
+                    int index = Integer.parseInt(tokens[1]);
+                    if (index >= 0 && index < treasureChest.size()) {
+                        String itemToDrop = treasureChest.get(index);
+                        treasureChest.remove(index);
+                        treasureChest.add(itemToDrop);
+                    }
+                }
+                case "Steal" -> {
+                    int count = Integer.parseInt(tokens[1]);
+                    if (treasureChest.size() < count) {
+                        count = treasureChest.size();
+                    }
+                    List<String> stolenItems = new ArrayList<>();
+                    int chestSize = treasureChest.size();
+                    for (int i = chestSize - 1; i >= chestSize - count; i--) {
+                        stolenItems.add(treasureChest.get(i));
+                        treasureChest.remove(i);
+                    }
+                    Collections.reverse(stolenItems);
+                    System.out.println(String.join(", ", stolenItems));
+                }
+            }
+        }
+        if (!treasureChest.isEmpty()) {
+            int treasureGain = 0;
+            for (String string : treasureChest) {
+                treasureGain += string.length();
+            }
+            double averageTreasureGain = 1.0 * treasureGain / treasureChest.size();
+            System.out.printf("Average treasure gain: %.2f pirate credits.\n", averageTreasureGain);
+        }
+        else {
+            System.out.println("Failed treasure hunt.");
+        }
     }
-
 }
 
 // Create a program that manages the state of the treasure chest along the way. On the first line,
