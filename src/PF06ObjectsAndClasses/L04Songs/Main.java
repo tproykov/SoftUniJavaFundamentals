@@ -32,9 +32,20 @@ public class Main {
 
 
         }
-        for (Song song : songs) {
-            System.out.println(song);
 
+        String typeListShow = scanner.nextLine();
+
+        if (typeListShow.equals("all")) {
+            for (Song song : songs) {
+                System.out.println(song.getName());
+            }
+        }
+        else {
+            for (Song song : songs) {
+                if (song.getTypeList().equals(typeListShow)) {
+                    System.out.println(song.getName());
+                }
+            }
         }
     }
 }
