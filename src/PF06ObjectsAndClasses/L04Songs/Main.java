@@ -1,5 +1,7 @@
 package PF06ObjectsAndClasses.L04Songs;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -10,15 +12,15 @@ public class Main {
 
         int n = Integer.parseInt(scanner.nextLine());
 
+        List<Song> songs = new ArrayList<>();
+
         for (int i = 0; i < n; i++) {
 
-            String songInfo = scanner.nextLine();
+            String[] songsInfo = scanner.nextLine().split("_");
 
-            String[] songsInfoParts = songInfo.split("_");
-
-            String typeList = songsInfoParts[0];
-            String name = songsInfoParts[1];
-            String time = songsInfoParts[2];
+            String typeList = songsInfo[0];
+            String name = songsInfo[1];
+            String time = songsInfo[2];
 
             Song currentSong = new Song();
 
@@ -26,6 +28,12 @@ public class Main {
             currentSong.setName(name);
             currentSong.setTime(time);
 
+            songs.add(currentSong);
+
+
+        }
+        for (Song song : songs) {
+            System.out.println(song);
 
         }
     }
