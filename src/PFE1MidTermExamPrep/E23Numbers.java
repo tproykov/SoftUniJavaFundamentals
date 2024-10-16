@@ -1,4 +1,4 @@
-package PFE1MidTremExam;
+package PFE1MidTermExamPrep;
 
 import java.util.*;
 import java.util.stream.Collectors;
