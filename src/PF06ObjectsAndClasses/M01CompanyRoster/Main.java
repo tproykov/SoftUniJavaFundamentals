@@ -13,12 +13,18 @@ public class Main {
         for (int i = 0; i < n; i++) {
 
             String[] input = scanner.nextLine().split("\\s+");
+
             String name = input[0];
             double salary = Double.parseDouble(input[1]);
             String position = input[2];
             String department = input[3];
-            String email = input[4];
-            int age = Integer.parseInt(input[5]);
+            String email = input.length > 4 ? input[4] : "n/a";
+            int age = input.length > 5 ? Integer.parseInt(input[5]) : -1;
+
+            Employee employee = new Employee(name, salary, position, department, email, age);
+
+
+
         }
     }
 }
