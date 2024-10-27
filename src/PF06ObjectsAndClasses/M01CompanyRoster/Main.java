@@ -1,8 +1,8 @@
-package PFE2MidTermExam;
+package PF06ObjectsAndClasses.M01CompanyRoster;
 
 import java.util.Scanner;
 
-public class E02 {
+public class Main {
 
     public static void main(String[] args) {
 

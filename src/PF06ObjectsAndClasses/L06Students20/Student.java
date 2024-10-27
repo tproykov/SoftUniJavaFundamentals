@@ -14,6 +14,10 @@ public class Student {
         this.homeTown = homeTown;
     }
 
+    public Student() {
+
+    }
+
     public String getFirstName() {
         return firstName;
     }
