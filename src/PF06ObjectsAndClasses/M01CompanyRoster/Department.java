@@ -5,30 +5,33 @@ import java.util.List;
 
 public class Department {
 
-    private String name;
-    private List<Employee> employees;
+    private final String name;
+    private final List<Employee> employees;
 
     public Department(String name) {
         this.name = name;
         this.employees = new ArrayList<>();
     }
 
-    public void addEmployee(Employee employee) {
-        employees.add(employee);
-    }
-
     public String getName() {
         return name;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
+    public void addEmployee(Employee employee) {
+        employees.add(employee);
     }
 
     public double getAverageSalary() {
-        return employees.stream()
-                .mapToDouble(Employee::getSalary)
-                .average()
-                .orElse(0.0);
+        double salary = 0;
+        for (Employee employee : employees) {
+            salary += employee.getSalary();
+        }
+        return salary / employees.size();
+    }
+
+    public List<Employee> getEmployeesSortedBySalaryDescending() {
+        List<Employee> sortedEmployees = new ArrayList<>(employees);
+        sortedEmployees.sort((e1, e2) -> Double.compare(e2.getSalary(), e1.getSalary()));
+        return sortedEmployees;
     }
 }
