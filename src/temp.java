@@ -1,57 +1,45 @@
 import java.util.*;
 
 public class temp {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Map<String, List<String>> forceUsers = new LinkedHashMap<>();
 
-        String input;
-        while (!(input = scanner.nextLine()).equals("Lumpawaroo")) {
-            if (input.contains("|")) {
-                String[] tokens = input.split("\\s+\\|\\s+");
-                String forceSide = tokens[0];
-                String forceUser = tokens[1];
+        // Using TreeMap to store users and their points (automatically sorted by username)
+        Map<String, Integer> userPoints = new LinkedHashMap<>();
 
-                // Check if user exists on any side
-                boolean userExists = false;
-                for (List<String> users : forceUsers.values()) {
-                    if (users.contains(forceUser)) {
-                        userExists = true;
-                        break;
-                    }
-                }
+        // Map to store language submission counts
+        Map<String, Integer> languageSubmissions = new LinkedHashMap<>();
 
-                if (!userExists) {
-                    // Add user to the side
-                    forceUsers.putIfAbsent(forceSide, new ArrayList<>());
-                    forceUsers.get(forceSide).add(forceUser);
-                }
-            } else if (input.contains("->")) {
-                String[] tokens = input.split("\\s+->\\s+");
-                String forceUser = tokens[0];
-                String forceSide = tokens[1];
+        String input = scanner.nextLine();
+        while (!input.equals("exam finished")) {
+            String[] tokens = input.split("-");
 
-                // Remove user from current side if exists
-                for (List<String> users : forceUsers.values()) {
-                    users.remove(forceUser);
-                }
+            if (tokens.length == 2 && tokens[1].equals("banned")) {
+                // Handle ban command
+                userPoints.remove(tokens[0]);
+            } else if (tokens.length == 3) {
+                String username = tokens[0];
+                String language = tokens[1];
+                int points = Integer.parseInt(tokens[2]);
 
-                // Add user to new side
-                forceUsers.putIfAbsent(forceSide, new ArrayList<>());
-                forceUsers.get(forceSide).add(forceUser);
-                System.out.printf("%s joins the %s side!%n", forceUser, forceSide);
+                // Update user points (keep the highest score)
+                userPoints.merge(username, points, Math::max);
+
+                // Update language submission count
+                languageSubmissions.merge(language, 1, Integer::sum);
             }
+
+            input = scanner.nextLine();
         }
 
-        // Print results
-        forceUsers.entrySet().stream()
-                .filter(entry -> !entry.getValue().isEmpty())
-                .forEach(entry -> {
-                    System.out.printf("Side: %s, Members: %d%n",
-                            entry.getKey(), entry.getValue().size());
-                    entry.getValue()
-                            .forEach(user -> System.out.println("! " + user));
-                });
+        // Print Results
+        System.out.println("Results:");
+        userPoints.forEach((username, points) ->
+                System.out.println(username + " | " + points));
+
+        // Print Submissions
+        System.out.println("Submissions:");
+        languageSubmissions.forEach((language, count) ->
+                System.out.println(language + " - " + count));
     }
 }
