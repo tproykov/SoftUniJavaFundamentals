@@ -2,12 +2,10 @@ package PF06ObjectsAndClasses.M02RawData;
 
 public class Tire {
 
-    private double pressure;
-    private int age;
+    private final double pressure;
 
     public Tire(double pressure, int age) {
         this.pressure = pressure;
-        this.age = age;
     }
 
     public double getPressure() {

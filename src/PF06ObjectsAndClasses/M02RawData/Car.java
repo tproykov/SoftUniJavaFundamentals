@@ -2,10 +2,10 @@ package PF06ObjectsAndClasses.M02RawData;
 
 public class Car {
 
-    private String model;
-    private Engine engine;
-    private Cargo cargo;
-    private Tire[] tires;
+    private final String model;
+    private final Engine engine;
+    private final Cargo cargo;
+    private final Tire[] tires;
 
     public Car(String model, int engineSpeed, int enginePower, int cargoWeight, String cargoType, double[] tirePressures, int[] tireAges) {
         this.model = model;

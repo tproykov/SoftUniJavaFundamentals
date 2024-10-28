@@ -2,11 +2,9 @@ package PF06ObjectsAndClasses.M02RawData;
 
 public class Engine {
 
-    private int speed;
-    private int power;
+    private final int power;
 
     public Engine(int speed, int power) {
-        this.speed = speed;
         this.power = power;
     }
 

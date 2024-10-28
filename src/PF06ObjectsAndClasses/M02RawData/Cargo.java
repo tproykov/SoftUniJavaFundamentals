@@ -2,11 +2,9 @@ package PF06ObjectsAndClasses.M02RawData;
 
 public class Cargo {
 
-    private int weight;
-    private String type;
+    private final String type;
 
     public Cargo(int weight, String type) {
-        this.weight = weight;
         this.type = type;
     }
 

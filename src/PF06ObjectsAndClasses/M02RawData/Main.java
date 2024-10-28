@@ -15,21 +15,7 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             String[] carData = scanner.nextLine().split("\\s+");
-            String model = carData[0];
-            int engineSpeed = Integer.parseInt(carData[1]);
-            int enginePower = Integer.parseInt(carData[2]);
-            int cargoWeight = Integer.parseInt(carData[3]);
-            String cargoType = carData[4];
-            double[] tirePressures = {
-                    Double.parseDouble(carData[5]), Double.parseDouble(carData[7]),
-                    Double.parseDouble(carData[9]), Double.parseDouble(carData[11])
-            };
-            int[] tireAges = {
-                    Integer.parseInt(carData[6]), Integer.parseInt(carData[8]),
-                    Integer.parseInt(carData[10]), Integer.parseInt(carData[12])
-            };
-
-            Car car = new Car(model, engineSpeed, enginePower, cargoWeight, cargoType, tirePressures, tireAges);
+            Car car = getCar(carData);
             cars.add(car);
         }
 
@@ -49,4 +35,23 @@ public class Main {
             }
         }
     }
+
+    private static Car getCar(String[] carData) {
+        String model = carData[0];
+        int engineSpeed = Integer.parseInt(carData[1]);
+        int enginePower = Integer.parseInt(carData[2]);
+        int cargoWeight = Integer.parseInt(carData[3]);
+        String cargoType = carData[4];
+        double[] tirePressures = {
+                Double.parseDouble(carData[5]), Double.parseDouble(carData[7]),
+                Double.parseDouble(carData[9]), Double.parseDouble(carData[11])
+        };
+        int[] tireAges = {
+                Integer.parseInt(carData[6]), Integer.parseInt(carData[8]),
+                Integer.parseInt(carData[10]), Integer.parseInt(carData[12])
+        };
+
+        return new Car(model, engineSpeed, enginePower, cargoWeight, cargoType, tirePressures, tireAges);
+    }
 }
+
