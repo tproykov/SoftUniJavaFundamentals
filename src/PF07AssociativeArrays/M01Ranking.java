@@ -12,51 +12,54 @@ public class M01Ranking {
 
         String input1;
         while (!(input1 = scanner.nextLine()).equals("end of contests")) {
-
             String[] tokens = input1.split(":");
-
             String contestName = tokens[0];
             String contestPassword = tokens[1];
-
-            if (!contestsPasswords.containsKey(contestName)) {
-                contestsPasswords.put(contestName, contestPassword);
-            }
+            contestsPasswords.put(contestName, contestPassword);
         }
 
-        Map<String, List<String>> contestsUsers = new LinkedHashMap<>();
-        Map<String,List<Integer>> contestsPoints = new LinkedHashMap<>();
+        Map<String, Map<String, Integer>> usersData = new TreeMap<>();
 
         String input2;
         while (!(input2 = scanner.nextLine()).equals("end of submissions")) {
-
-            String[] tokens = input2.split(":");
+            String[] tokens = input2.split("=>");
             String contestName = tokens[0];
             String contestPassword = tokens[1];
             String username = tokens[2];
             int currentPoints = Integer.parseInt(tokens[3]);
 
-            if (contestsPasswords.containsKey(contestName)) {
-                if (!contestsPasswords.get(contestName).equals(contestPassword)) {
+            if (contestsPasswords.containsKey(contestName) && contestsPasswords.get(contestName).equals(contestPassword)) {
+                usersData.putIfAbsent(username, new HashMap<>());
+                Map<String, Integer> userContests = usersData.get(username);
 
-                    if (!contestsUsers.containsKey(contestName)) {
-                        contestsUsers.put(contestName, new ArrayList<>());
-                        contestsUsers.get(contestName).add(username);
-                    }
-                    else {
-
-                        List<String> users = contestsUsers.get(contestName);
-                        List<Integer> points = contestsPoints.get(contestName);
-
-                        int index = users.indexOf(username);
-
-                        if (points.get(index) < currentPoints) {
-                            points.set(index, currentPoints);
-                        }
-
-                        contestsPoints.put(contestName, points);
-                    }
-                }
+                userContests.put(contestName, Math.max(userContests.getOrDefault(contestName, 0), currentPoints));
             }
+        }
+
+        String bestCandidate = "";
+        int bestTotalPoints = 0;
+        for (Map.Entry<String, Map<String, Integer>> entry : usersData.entrySet()) {
+            String user = entry.getKey();
+            int totalPoints = entry.getValue().values().stream().mapToInt(Integer::intValue).sum();
+
+            if (totalPoints > bestTotalPoints) {
+                bestTotalPoints = totalPoints;
+                bestCandidate = user;
+            }
+        }
+
+        System.out.println("Best candidate is " + bestCandidate + " with total " + bestTotalPoints + " points.");
+
+        System.out.println("Ranking:");
+        for (Map.Entry<String, Map<String, Integer>> entry : usersData.entrySet()) {
+            String user = entry.getKey();
+            System.out.println(user);
+
+            entry.getValue().entrySet().stream()
+                    .sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
+                    .forEach(contestEntry ->
+                            System.out.println("#  " + contestEntry.getKey() + " -> " + contestEntry.getValue())
+                    );
         }
     }
 }

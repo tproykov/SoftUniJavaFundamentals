@@ -1,45 +1,63 @@
 import java.util.*;
 
 public class temp {
+
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
-        // Using TreeMap to store users and their points (automatically sorted by username)
-        Map<String, Integer> userPoints = new LinkedHashMap<>();
+        Map<String, String> contestsPasswords = new HashMap<>();
 
-        // Map to store language submission counts
-        Map<String, Integer> languageSubmissions = new LinkedHashMap<>();
-
-        String input = scanner.nextLine();
-        while (!input.equals("exam finished")) {
-            String[] tokens = input.split("-");
-
-            if (tokens.length == 2 && tokens[1].equals("banned")) {
-                // Handle ban command
-                userPoints.remove(tokens[0]);
-            } else if (tokens.length == 3) {
-                String username = tokens[0];
-                String language = tokens[1];
-                int points = Integer.parseInt(tokens[2]);
-
-                // Update user points (keep the highest score)
-                userPoints.merge(username, points, Math::max);
-
-                // Update language submission count
-                languageSubmissions.merge(language, 1, Integer::sum);
-            }
-
-            input = scanner.nextLine();
+        String input1;
+        while (!(input1 = scanner.nextLine()).equals("end of contests")) {
+            String[] tokens = input1.split(":");
+            String contestName = tokens[0];
+            String contestPassword = tokens[1];
+            contestsPasswords.put(contestName, contestPassword);
         }
 
-        // Print Results
-        System.out.println("Results:");
-        userPoints.forEach((username, points) ->
-                System.out.println(username + " | " + points));
+        Map<String, Map<String, Integer>> usersData = new TreeMap<>();
 
-        // Print Submissions
-        System.out.println("Submissions:");
-        languageSubmissions.forEach((language, count) ->
-                System.out.println(language + " - " + count));
+        String input2;
+        while (!(input2 = scanner.nextLine()).equals("end of submissions")) {
+            String[] tokens = input2.split("=>");
+            String contestName = tokens[0];
+            String contestPassword = tokens[1];
+            String username = tokens[2];
+            int currentPoints = Integer.parseInt(tokens[3]);
+
+            if (contestsPasswords.containsKey(contestName) && contestsPasswords.get(contestName).equals(contestPassword)) {
+                usersData.putIfAbsent(username, new HashMap<>());
+                Map<String, Integer> userContests = usersData.get(username);
+
+                userContests.put(contestName, Math.max(userContests.getOrDefault(contestName, 0), currentPoints));
+            }
+        }
+
+        String bestCandidate = "";
+        int bestTotalPoints = 0;
+        for (Map.Entry<String, Map<String, Integer>> entry : usersData.entrySet()) {
+            String user = entry.getKey();
+            int totalPoints = entry.getValue().values().stream().mapToInt(Integer::intValue).sum();
+
+            if (totalPoints > bestTotalPoints) {
+                bestTotalPoints = totalPoints;
+                bestCandidate = user;
+            }
+        }
+
+        System.out.println("Best candidate is " + bestCandidate + " with total " + bestTotalPoints + " points.");
+
+        System.out.println("Ranking:");
+        for (Map.Entry<String, Map<String, Integer>> entry : usersData.entrySet()) {
+            String user = entry.getKey();
+            System.out.println(user);
+
+            entry.getValue().entrySet().stream()
+                    .sorted((a, b) -> Integer.compare(b.getValue(), a.getValue()))
+                    .forEach(contestEntry ->
+                            System.out.println("#  " + contestEntry.getKey() + " -> " + contestEntry.getValue())
+                    );
+        }
     }
 }
