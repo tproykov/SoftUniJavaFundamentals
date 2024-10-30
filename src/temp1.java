@@ -5,93 +5,60 @@ public class temp1 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        // Map to store valid contests and their passwords
-        Map<String, String> contestsPasswords = new HashMap<>();
+        // Map to store contests and participants with their scores
+        Map<String, Map<String, Integer>> contests = new LinkedHashMap<>();
+        // Map to store each user's total score across all contests
+        Map<String, Integer> individualScores = new HashMap<>();
 
-        String input1;
-        while (!(input1 = scanner.nextLine()).equals("end of contests")) {
-            String[] tokens = input1.split(":");
-            String contestName = tokens[0];
-            String contestPassword = tokens[1];
-            contestsPasswords.put(contestName, contestPassword);
-        }
+        String input;
+        while (!(input = scanner.nextLine()).equals("no more time")) {
+            String[] tokens = input.split(" -> ");
+            String username = tokens[0];
+            String contest = tokens[1];
+            int points = Integer.parseInt(tokens[2]);
 
-        // Map to store users and their total points
-        Map<String, Integer> userTotalPoints = new HashMap<>();
+            // Add contest if it does not exist
+            contests.putIfAbsent(contest, new HashMap<>());
 
-        // Map to store each user's points in specific contests
-        Map<String, List<String>> userContests = new HashMap<>();
-        Map<String, List<Integer>> userPoints = new HashMap<>();
+            // Update user points in contest if necessary
+            contests.get(contest).putIfAbsent(username, 0);
+            if (contests.get(contest).get(username) < points) {
+                int previousPoints = contests.get(contest).get(username);
+                contests.get(contest).put(username, points);
 
-        String input2;
-        while (!(input2 = scanner.nextLine()).equals("end of submissions")) {
-            String[] tokens = input2.split("=>");
-            String contestName = tokens[0];
-            String contestPassword = tokens[1];
-            String username = tokens[2];
-            int currentPoints = Integer.parseInt(tokens[3]);
-
-            // Validate contest and password
-            if (contestsPasswords.containsKey(contestName) && contestsPasswords.get(contestName).equals(contestPassword)) {
-                // Initialize lists for contests and points if this user is new
-                userContests.putIfAbsent(username, new ArrayList<>());
-                userPoints.putIfAbsent(username, new ArrayList<>());
-
-                List<String> contests = userContests.get(username);
-                List<Integer> points = userPoints.get(username);
-
-                // Check if the user already has points for this contest
-                int index = contests.indexOf(contestName);
-                if (index == -1) {
-                    // New contest for this user
-                    contests.add(contestName);
-                    points.add(currentPoints);
-                } else {
-                    // Update the points if current points are higher
-                    if (points.get(index) < currentPoints) {
-                        // Update total points accordingly
-                        int diff = currentPoints - points.get(index);
-                        points.set(index, currentPoints);
-                        userTotalPoints.put(username, userTotalPoints.getOrDefault(username, 0) + diff);
-                    }
-                }
-
-                // Update user's total points if they are new or adding new points
-                if (!userTotalPoints.containsKey(username)) {
-                    userTotalPoints.put(username, currentPoints);
-                } else if (index == -1) {
-                    userTotalPoints.put(username, userTotalPoints.get(username) + currentPoints);
-                }
+                // Update user's total points in individualScores
+                individualScores.put(username, individualScores.getOrDefault(username, 0) - previousPoints + points);
             }
         }
 
-        // Determine the best candidate
-        String bestCandidate = "";
-        int bestTotalPoints = 0;
-        for (Map.Entry<String, Integer> entry : userTotalPoints.entrySet()) {
-            if (entry.getValue() > bestTotalPoints) {
-                bestTotalPoints = entry.getValue();
-                bestCandidate = entry.getKey();
+        // Print each contest with participants sorted by points and then by name
+        for (String contest : contests.keySet()) {
+            System.out.println(contest + ": " + contests.get(contest).size() + " participants");
+            Map<String, Integer> participants = contests.get(contest);
+
+            // Sort participants and use a rank counter
+            List<Map.Entry<String, Integer>> sortedParticipants = new ArrayList<>(participants.entrySet());
+            sortedParticipants.sort((a, b) -> b.getValue().equals(a.getValue())
+                    ? a.getKey().compareTo(b.getKey())
+                    : b.getValue() - a.getValue());
+
+            int rank = 1;
+            for (Map.Entry<String, Integer> entry : sortedParticipants) {
+                System.out.printf("%d. %s <::> %d%n", rank++, entry.getKey(), entry.getValue());
             }
         }
 
-        // Output the best candidate
-        System.out.println("Best candidate is " + bestCandidate + " with total " + bestTotalPoints + " points.");
+        // Print individual standings sorted by total points and then by name
+        System.out.println("Individual standings:");
+        List<Map.Entry<String, Integer>> sortedUsers = new ArrayList<>(individualScores.entrySet());
+        sortedUsers.sort((a, b) -> b.getValue().equals(a.getValue())
+                ? a.getKey().compareTo(b.getKey())
+                : b.getValue() - a.getValue());
 
-        // Output all users and their contests with points
-        System.out.println("Ranking:");
-        userContests.keySet().stream().sorted().forEach(user -> {
-            System.out.println(user);
-            List<String> contests = userContests.get(user);
-            List<Integer> points = userPoints.get(user);
-
-            // Sort contests by points in descending order and print
-            List<String> sortedContests = new ArrayList<>(contests);
-            sortedContests.sort((a, b) -> Integer.compare(points.get(contests.indexOf(b)), points.get(contests.indexOf(a))));
-
-            for (String contest : sortedContests) {
-                System.out.println("#  " + contest + " -> " + points.get(contests.indexOf(contest)));
-            }
-        });
+        int rank = 1;
+        for (Map.Entry<String, Integer> entry : sortedUsers) {
+            System.out.printf("%d. %s -> %d%n", rank++, entry.getKey(), entry.getValue());
+        }
     }
 }
+
