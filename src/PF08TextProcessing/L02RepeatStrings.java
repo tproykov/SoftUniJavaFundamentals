@@ -14,10 +14,13 @@ public class L02RepeatStrings {
 
         for (String string : strings) {
 
-            for (int i = 0; i < string.length(); i++) {
+//            for (int i = 0; i < string.length(); i++) {
+//
+//                output += string;
+//            }
 
-                output += string;
-            }
+            output += string.repeat(string.length());
+
         }
         System.out.println(output);
     }
