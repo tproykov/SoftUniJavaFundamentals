@@ -8,8 +8,18 @@ public class E04CaesarCipher {
 
         Scanner scanner = new Scanner(System.in);
 
+        String input = scanner.nextLine();
 
+        String encryptedMessage = "";
 
+        for (int i = 0; i < input.length(); i++) {
+
+            char currentChar = input.charAt(i);
+
+            char encryptedChar = (char) (currentChar + 3);
+
+            encryptedMessage += encryptedChar;
+        }
+        System.out.println(encryptedMessage);
     }
-
 }
