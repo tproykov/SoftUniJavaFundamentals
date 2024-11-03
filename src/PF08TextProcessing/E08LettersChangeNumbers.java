@@ -23,24 +23,24 @@ public class E08LettersChangeNumbers {
 
             int positionStartCharacter;
             if (Character.isUpperCase(characterStart)) {
-                positionStartCharacter = characterStart - 40;
+                positionStartCharacter = characterStart - 64;
 
                 number /= positionStartCharacter;
             }
             else if (Character.isLowerCase(characterStart)) {
-                positionStartCharacter = characterStart - 60;
+                positionStartCharacter = characterStart - 96;
 
                 number *= positionStartCharacter;
             }
 
             int positionEndCharacter;
             if (Character.isUpperCase(characterEnd)) {
-                positionEndCharacter = characterEnd - 40;
+                positionEndCharacter = characterEnd - 64;
 
                 number -= positionEndCharacter;
             }
             else if (Character.isLowerCase(characterEnd)) {
-                positionEndCharacter = characterEnd - 60;
+                positionEndCharacter = characterEnd - 96;
                 number += positionEndCharacter;
             }
 
