@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class E02 {
+public class E02ArcheryChampion {
 
     public static void main(String[] args) {
 
