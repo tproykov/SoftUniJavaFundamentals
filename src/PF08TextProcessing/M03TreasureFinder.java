@@ -1,5 +1,6 @@
 package PF08TextProcessing;
 
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -13,13 +14,13 @@ public class M03TreasureFinder {
                 .mapToInt(Integer::parseInt).toArray();
 
         String command;
-        while (!"end".equals(command = scanner.nextLine())) {
+        while (!"find".equals(command = scanner.nextLine())) {
 
             int index = 0;
             String decryptedMessage = "";
             for (int i = 0; i < command.length(); i++) {
 
-                char decryptedChar = (char) (command.charAt(i) + key[index]);
+                char decryptedChar = (char) (command.charAt(i) - key[index]);
 
                 decryptedMessage += decryptedChar;
 
@@ -30,12 +31,14 @@ public class M03TreasureFinder {
             }
 
             String[] treasureParts = decryptedMessage.split("&");
+
             String treasure = treasureParts[1];
 
-            String[] coordinatesParts = treasure.split(",");
+            String[] coordinatesParts = decryptedMessage.split("[<>]");
 
+            String coordinates = coordinatesParts[1];
 
-
+            System.out.println("Found " + treasure + " at " + coordinates);
         }
     }
 }
