@@ -8,6 +8,12 @@ public class E04NetherRealms {
 
         Scanner scanner = new Scanner(System.in);
 
+        String[] demons = scanner.nextLine().split(",\\s+");
+
+        String regexHealth = "[^0-9+\\-*/.]";
+        String regexDamage = "[+-]?\\d+(\\.\\d+)?";
+
+
 
 
     }
