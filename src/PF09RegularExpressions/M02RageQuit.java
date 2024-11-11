@@ -14,7 +14,7 @@ public class M02RageQuit {
 
         String input = scanner.nextLine();
 
-        String regex = "[^0-9]+[0-9]";
+        String regex = "[^0-9]+[0-9]+";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 
@@ -33,21 +33,6 @@ public class M02RageQuit {
             stringSequences.add(matcherStrings.group());
         }
 
-        StringBuilder uniqueSymbols = new StringBuilder();
-
-        for (String stringSequence : stringSequences) {
-
-            for (int i = 0; i < stringSequence.length(); i++) {
-
-                String symbol = stringSequence.charAt(i) + "";
-                String symbolUpperCase = symbol.toUpperCase();
-
-                if (uniqueSymbols.indexOf(symbolUpperCase) == -1) {
-                    uniqueSymbols.append(symbolUpperCase);
-                }
-            }
-        }
-
         String regexNumbers = "\\d+";
         Pattern patternNumbers = Pattern.compile(regexNumbers);
         Matcher matcherNumbers = patternNumbers.matcher(input);
@@ -57,12 +42,27 @@ public class M02RageQuit {
             numberSequences.add(Integer.parseInt(matcherNumbers.group()));
         }
 
-        System.out.println("Unique symbols used: " + uniqueSymbols.length());
+        StringBuilder rageMessage = new StringBuilder();
 
         for (int i = 0; i < stringNumberSequences.size(); i++) {
-
-            String sequenceToPrint = stringSequences.get(i).toUpperCase();
-            System.out.print(sequenceToPrint.repeat(numberSequences.get(i)));
+            int repeatCount = numberSequences.get(i);
+            if (repeatCount > 0) {
+                String sequenceToPrint = stringSequences.get(i).toUpperCase();
+                rageMessage.append(sequenceToPrint.repeat(repeatCount));
+            }
         }
+
+        // Calculate unique symbols used
+        StringBuilder uniqueSymbols = new StringBuilder();
+        for (int i = 0; i < rageMessage.length(); i++) {
+            String symbol = String.valueOf(rageMessage.charAt(i));
+            if (uniqueSymbols.indexOf(symbol) == -1) {
+                uniqueSymbols.append(symbol);
+            }
+        }
+
+        // Print the results
+        System.out.println("Unique symbols used: " + uniqueSymbols.length());
+        System.out.println(rageMessage);
     }
 }
