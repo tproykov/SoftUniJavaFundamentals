@@ -8,7 +8,7 @@ public class E13BakeryShop {
 
         Scanner scanner = new Scanner(System.in);
 
-        
+
 
     }
 
