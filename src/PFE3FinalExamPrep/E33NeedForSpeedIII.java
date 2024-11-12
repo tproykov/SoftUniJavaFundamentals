@@ -8,7 +8,7 @@ public class E33NeedForSpeedIII {
 
         Scanner scanner = new Scanner(System.in);
 
-        
+
 
     }
 
