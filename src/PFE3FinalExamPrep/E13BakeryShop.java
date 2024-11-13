@@ -1,6 +1,7 @@
 package PFE3FinalExamPrep;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -10,7 +11,7 @@ public class E13BakeryShop {
 
         Scanner scanner = new Scanner(System.in);
 
-        Map<String, Integer> foodQuantity = new HashMap<>();
+        Map<String, Integer> foodQuantity = new LinkedHashMap<>();
         int foodQuantitySold = 0;
 
         String command;
@@ -51,6 +52,7 @@ public class E13BakeryShop {
                             foodQuantity.remove(productName);
                         }
                         else {
+                            System.out.println("You sold " + quantity + " " + productName + ".");
                             foodQuantity.put(productName, foodQuantity.get(productName) - quantity);
                             foodQuantitySold += quantity;
                         }
@@ -61,6 +63,6 @@ public class E13BakeryShop {
         for (Map.Entry<String, Integer> entry : foodQuantity.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
-        System.out.println("All sold: " + foodQuantitySold + " good");
+        System.out.println("All sold: " + foodQuantitySold + " goods");
     }
 }
