@@ -39,11 +39,16 @@ public class E13BakeryShop {
                         System.out.println("You do not have any " + productName + ".");
                     }
                     else {
-                        if (foodQuantity.get(productName) <= quantity) {
+                        if (foodQuantity.get(productName) < quantity) {
                             foodQuantitySold += foodQuantity.get(productName);
-                            foodQuantity.remove(productName);
                             System.out.println("There aren't enough " + productName + ". You sold the last "
                                     + foodQuantity.get(productName) + " of them.");
+                            foodQuantity.remove(productName);
+                        }
+                        else if (foodQuantity.get(productName) == quantity) {
+                            foodQuantitySold += quantity;
+                            System.out.println("You sold " + quantity + " " + productName + ".");
+                            foodQuantity.remove(productName);
                         }
                         else {
                             foodQuantity.put(productName, foodQuantity.get(productName) - quantity);
@@ -54,10 +59,8 @@ public class E13BakeryShop {
             }
         }
         for (Map.Entry<String, Integer> entry : foodQuantity.entrySet()) {
-
-
-
-            
+            System.out.println(entry.getKey() + ": " + entry.getValue());
         }
+        System.out.println("All sold: " + foodQuantitySold + " good");
     }
 }
