@@ -47,10 +47,17 @@ public class E13BakeryShop {
                         }
                         else {
                             foodQuantity.put(productName, foodQuantity.get(productName) - quantity);
+                            foodQuantitySold += quantity;
                         }
                     }
                 }
             }
+        }
+        for (Map.Entry<String, Integer> entry : foodQuantity.entrySet()) {
+
+
+
+            
         }
     }
 }
