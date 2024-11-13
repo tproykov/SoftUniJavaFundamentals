@@ -16,11 +16,11 @@ public class E12DestinationMapper {
 
         List<String> destinations = new ArrayList<>();
 
-        String regex = "([=/])[A-Z][A-Za-z]{2,}\\1";
+        String regex = "([=/])([A-Z][A-Za-z]{2,})\\1";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
         while (matcher.find()) {
-            System.out.println(matcher.group());
+            destinations.add(matcher.group(2));
         }
 
         int travelPoints = 0;
@@ -28,13 +28,8 @@ public class E12DestinationMapper {
             travelPoints += destination.length();
         }
 
-        System.out.println("Destinations: ");
-
-
-
-
-
+        System.out.print("Destinations: ");
+        System.out.println(String.join(", ", destinations));
+        System.out.print("Travel Points: " + travelPoints);
     }
-
-
 }
