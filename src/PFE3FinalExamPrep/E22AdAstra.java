@@ -22,11 +22,14 @@ public class E22AdAstra {
         }
 
         int daysWithFood = totalCalories / 2000;
-
         System.out.println("You have food to last you for: " + daysWithFood + " days!");
 
+        matcher.reset(input);
 
-
+        while (matcher.find()) {
+            System.out.println("Item: " + matcher.group("itemName")
+                    + ", Best before: " + matcher.group("expirationDate")
+                    + ", Nutrition: " + matcher.group("calories"));
+        }
     }
-
 }
