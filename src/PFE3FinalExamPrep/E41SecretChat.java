@@ -2,7 +2,7 @@ package PFE3FinalExamPrep;
 
 import java.util.Scanner;
 
-public class E33NeedForSpeedIII {
+public class E41SecretChat {
 
     public static void main(String[] args) {
 

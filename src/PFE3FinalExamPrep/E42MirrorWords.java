@@ -2,7 +2,7 @@ package PFE3FinalExamPrep;
 
 import java.util.Scanner;
 
-public class E32MirrorWords {
+public class E42MirrorWords {
 
     public static void main(String[] args) {
 
