@@ -35,6 +35,7 @@ public class E41SecretChat {
                     }
                     else {
                         System.out.println("error");
+                        continue;
                     }
                 }
 
