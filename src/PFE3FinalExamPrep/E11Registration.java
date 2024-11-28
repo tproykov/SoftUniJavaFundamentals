@@ -14,7 +14,7 @@ public class E11Registration {
         while(!(command = scanner.nextLine()).equals("Registration")){
 
             String[] tokens = command.split(" ");
-            String commandType = tokens[0];
+            String commandType = tokens[0]; 
             switch (commandType){
 
                 case "Letters" -> {
