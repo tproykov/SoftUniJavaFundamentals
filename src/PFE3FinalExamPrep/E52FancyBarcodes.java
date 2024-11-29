@@ -41,7 +41,7 @@ public class E52FancyBarcodes {
                 System.out.println("Product group: " + productGroup);
             }
             if (!isValid) {
-                System.out.println("Invalid Barcode");
+                System.out.println("Invalid barcode");
             }
         }
     }
