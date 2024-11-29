@@ -6,7 +6,7 @@ public class E11Registration {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);  
+        Scanner scanner = new Scanner(System.in);
 
         String username = scanner.nextLine();
 
@@ -18,7 +18,7 @@ public class E11Registration {
             switch (commandType){
 
                 case "Letters" -> {
-                    String letterCase = tokens[1];
+                    String letterCase = tokens[1]; 
                     switch (letterCase){
                         case "Lower" -> username = username.toLowerCase();
                         case "Upper" -> username = username.toUpperCase();
