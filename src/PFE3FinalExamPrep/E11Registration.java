@@ -18,7 +18,7 @@ public class E11Registration {
             switch (commandType){
 
                 case "Letters" -> {
-                    String letterCase = tokens[1]; 
+                    String letterCase = tokens[1];
                     switch (letterCase){
                         case "Lower" -> username = username.toLowerCase();
                         case "Upper" -> username = username.toUpperCase();
