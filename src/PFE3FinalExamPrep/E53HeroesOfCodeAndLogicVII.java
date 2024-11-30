@@ -94,18 +94,18 @@ public class E53HeroesOfCodeAndLogicVII {
                     if (heroesHitPoints.get(heroName) > 100) {
                         int healed = amount - (heroesHitPoints.get(heroName) - 100);
                         heroesHitPoints.put(heroName, 100);
-                        System.out.println(heroName + " healed for " + healed + " MP!");
+                        System.out.println(heroName + " healed for " + healed + " HP!");
                     }
                     else {
-                        System.out.println(heroName + " healed for " + amount + " MP!");
+                        System.out.println(heroName + " healed for " + amount + " HP!");
                     }
                 }
             }
         }
         for (Map.Entry<String, Integer> hero : heroesHitPoints.entrySet()) {
             System.out.println(hero.getKey());
-            System.out.println("  " + hero.getValue());
-            System.out.println("  " + heroesManaPoints.get(hero.getKey()));
+            System.out.println("  HP: " + hero.getValue());
+            System.out.println("  MP: " + heroesManaPoints.get(hero.getKey()));
         }
     }
 }
