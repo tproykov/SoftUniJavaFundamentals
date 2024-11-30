@@ -24,7 +24,7 @@ public class E62EmojiDetector {
             }
         }
 
-        String regex = "([:*]{2})([A-Z][a-z]{2,})\\1";
+        String regex = "(\\*\\*|::)([A-Z][a-z]{2,})\\1";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 
@@ -50,9 +50,7 @@ public class E62EmojiDetector {
             }
         }
         System.out.println("Cool threshold: " + coolThreshold);
-        if (!coolEmojis.isEmpty()) {
-            System.out.println(emojiCount + "emojis found in the text. The cool ones are:");
-        }
+        System.out.println(emojiCount + " emojis found in the text. The cool ones are:");
         for (String emoji : coolEmojisToPrint) {
             System.out.println(emoji);
         }
