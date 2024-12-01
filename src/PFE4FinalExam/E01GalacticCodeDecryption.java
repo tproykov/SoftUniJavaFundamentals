@@ -2,7 +2,7 @@ package PFE4FinalExam;
 
 import java.util.Scanner;
 
-public class E01 {
+public class E01GalacticCodeDecryption {
 
     public static void main(String[] args) {
 
